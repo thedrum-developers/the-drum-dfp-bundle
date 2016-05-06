@@ -5,7 +5,7 @@ Adds support for configuring and rendering DFP ad units in a Symfony project
 ## Installation
 
 ```
-composer require thedrum-developers/dfp-bundle
+composer require thedrum-developers/the-drum-dfp-bundle dev-master
 ```
 ## Configuration
 
