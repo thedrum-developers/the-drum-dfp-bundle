@@ -1,0 +1,25 @@
+services:
+    the_drum_dfp.helper.dfp_data:
+      class: TheDrum\DfpBundle\Helper\DfpDataHelper
+      arguments: [ "@request_stack" ]
+      calls:
+          - [ addTargeting, [ 'environment', '%kernel.environment%' ] ]
+
+    the_drum_dfp.data_collector:
+      class: TheDrum\DfpBundle\DataCollector\DfpDataCollector
+      arguments: [ "@the_drum_dfp.helper.dfp_data" ]
+      public: false
+      tags:
+            - { name: data_collector, id: 'the_drum_dfp.data_collector', template: '@TheDrumDfp/Collector/template.html.twig' }
+
+    the_drum_dfp.twig.dfp_extension:
+        class: TheDrum\DfpBundle\Twig\Extension\DfpExtension
+        arguments: [ "@the_drum_dfp.helper.dfp_data", '%the_drum_dfp.active%'  ]
+        tags:
+            - { name: twig.extension }
+
+    the_drum_dfp.listener.kernel_response:
+        class: TheDrum\DfpBundle\EventListener\ResponseListener
+        arguments: [ "@the_drum_dfp.helper.dfp_data" ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: "onKernelResponse" }

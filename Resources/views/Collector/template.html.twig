@@ -1,0 +1,80 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        <span class="icon">{{ include('@TheDrumDfp/Collector/icon.svg') }}</span>
+        <span class="sf-toolbar-value">DFP</span>
+    {% endset %}
+    {% set text %}
+        {% for key, value in collector.getTargetingData() %}
+            <div class="sf-toolbar-info-piece">
+                <b>{{ key }}</b>
+                {{ value|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}
+            </div>
+        {% endfor %}
+
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { 'link': true }) }}
+{% endblock %}
+
+{% block menu %}
+    {# This left-hand menu appears when using the full-screen profiler. #}
+    <span class="label">
+        <span class="icon">{{ include('@TheDrumDfp/Collector/icon.svg') }}</span>
+        <strong>DFP</strong>
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Slots</h2>
+    {% for slot in collector.getSlotData() %}
+        <table>
+            <thead>
+            <tr>
+                <th colspan="2">{{ slot.positionName }} ({{ slot.usage }})</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>DFP Ad Unit Name</th>
+                    <td>
+                        {{ slot.slotName }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>DOM Element ID</th>
+                    <td>
+                        {{ slot.domName }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Screen Sizes</th>
+                    <td>
+                        {{ slot.screenSizes|json_encode }}
+                    </td>
+                </tr>
+
+                <tr>
+                    <th>Ad Sizes</th>
+                    <td>
+                        {{ slot.adSizes|json_encode }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {% endfor %}
+
+    <h2>Targeting</h2>
+
+    <table>
+    {% for key, value in collector.getTargetingData() %}
+        <tr>
+            <td>{{ key }}</td>
+            <td>{{ value|json_encode(constant('JSON_UNESCAPED_SLASHES')) }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+
+{% endblock %}

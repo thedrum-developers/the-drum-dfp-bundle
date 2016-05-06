@@ -1,0 +1,23 @@
+{
+    "name": "thedrum-developers/dfp-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony DFP Bundle",
+    "keywords": [ "dfp", "google dfp", "double click" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chris Shennan",
+            "email": "chris.shennan@thedrum.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.5"
+
+    },
+    "autoload": {
+        "psr-4": {
+            "TheDrum\\DfpBUndle\\": ""
+        }
+    }
+}
