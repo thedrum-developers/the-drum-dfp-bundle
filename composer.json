@@ -1,5 +1,5 @@
 {
-    "name": "thedrum-developers/dfp-bundle",
+    "name": "thedrum-developers/the-drum-dfp-bundle",
     "type": "symfony-bundle",
     "description": "Symfony DFP Bundle",
     "keywords": [ "dfp", "google dfp", "double click" ],
@@ -17,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "TheDrum\\DfpBUndle\\": ""
+            "TheDrum\\DfpBundle\\": ""
         }
     }
 }
