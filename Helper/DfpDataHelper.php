@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 class DfpDataHelper
 {
     protected $networkId;
-    protected $targeting = [];
-    protected $positions = [];
-    protected $units = [];
-    protected $usedSlots = [];
+    protected $targeting = array();
+    protected $positions = array();
+    protected $units = array();
+    protected $usedSlots = array();
 
     public function __construct(RequestStack $requestStack)
     {
@@ -36,7 +36,7 @@ class DfpDataHelper
         $this->targeting[$key] = $value;
     }
 
-    public function mergeTargeting($data = [])
+    public function mergeTargeting($data = array())
     {
         if (!is_array($data)) {
             return;
@@ -68,17 +68,17 @@ class DfpDataHelper
         return $this->units;
     }
 
-    public function setUsedSlots($slots = [])
+    public function setUsedSlots($slots = array())
     {
         $this->usedSlots = $slots;
     }
 
     protected function buildAdSlotConfig()
     {
-        $adUnits = [];
+        $adUnits = array();
 
         foreach ($this->positions as $key => $position) {
-            $tmp = [];
+            $tmp = array();
             foreach ($position as $attributeKey => $data) {
                 if ($attributeKey == 'slot_name') {
                     $data = "/{$this->networkId}/{$data}";

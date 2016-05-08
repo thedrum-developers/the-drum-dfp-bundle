@@ -26,7 +26,7 @@ class TheDrumDfpExtension extends Extension
         $loader->load('services.yml');
 
         // Once the services definition are read, get your service and add a method call to setConfig()
-        $sillyServiceDefintion = $container->getDefinition('the_drum_dfp.helper.dfp_data');
-        $sillyServiceDefintion->addMethodCall('setConfig', [ $config[ 'network_id' ], $config['domain'], $config['positions'] ]);
+        $dfpDataHelperDefinition = $container->getDefinition('the_drum_dfp.helper.dfp_data');
+        $dfpDataHelperDefinition->addMethodCall('setConfig', array($config[ 'network_id' ], $config['domain'], $config['positions']));
     }
 }
