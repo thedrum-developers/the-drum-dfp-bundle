@@ -2,7 +2,6 @@
 
 namespace TheDrum\DfpBundle\Twig\Extension;
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use TheDrum\DfpBundle\Helper\DfpDataHelper;
 
 class DfpExtension extends \Twig_Extension
