@@ -4,9 +4,17 @@ Adds support for configuring and rendering DFP ad units in a Symfony project
 
 ## Installation
 
+#### Install the bundle
 ```
 composer require thedrum-developers/the-drum-dfp-bundle dev-master
 ```
+
+#### Install the assets
+
+```
+bin/console assets:install --symlink
+```
+
 ## Configuration
 
 #### Add the appropriate configuration for your ads i.e.
@@ -34,6 +42,12 @@ the_drum_dfp:
 
 i.e. `<div id="DFP_mpu_dh_1"></div>`
 
+#### Include the following before the closing </body> tag
+
+```
+{{ the_drum_dfp_render() }}
+<script async src="/bundles/thedrumdfp/js/dfp.js"></script>
+```
 
 #### Activate Ads
 

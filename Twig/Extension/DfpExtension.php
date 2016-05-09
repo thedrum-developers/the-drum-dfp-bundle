@@ -23,7 +23,7 @@ class DfpExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('render_dfp', array($this, 'renderDfp'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('the_drum_dfp_render', array($this, 'renderDfp'), array('is_safe' => array('html'))),
         );
     }
 
@@ -44,8 +44,6 @@ class DfpExtension extends \Twig_Extension
                 'var tdDfpTargeting = ' . json_encode($targeting) . ";",
                 '</script>',
             ];
-
-            $markup[] = '<script async src="/bundles/thedrumdfp/js/dfp.js"></script>';
         }
 
         return implode('', $markup);
