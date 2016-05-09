@@ -1,5 +1,9 @@
 # The Drum DFP Bundle
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ad468b2f-affb-49cb-9b50-01d4fe231194/mini.png)](https://insight.sensiolabs.com/projects/ad468b2f-affb-49cb-9b50-01d4fe231194)
+
+---
+
 Adds support for configuring and rendering DFP ad units in a Symfony project
 
 ## Installation
