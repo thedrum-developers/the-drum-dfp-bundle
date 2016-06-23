@@ -5,7 +5,7 @@ namespace TheDrum\DfpBundle\Helper;
 use Doctrine\Common\Util\Inflector;
 use Symfony\Component\HttpFoundation\RequestStack;
 
-class DfpDataHelper
+class DfpDataHelper implements DfpDataHelperInterface
 {
     protected $networkId;
     protected $targeting = array();
@@ -16,11 +16,6 @@ class DfpDataHelper
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
-        $this->request = $this->requestStack->getCurrentRequest();
-
-        if ($this->request) {
-            $this->addTargeting('path', substr($this->request->getPathInfo(), 1));
-        }
     }
 
     public function setConfig($networkId, $domain, $positions = array())
@@ -47,8 +42,11 @@ class DfpDataHelper
 
     public function getTargeting()
     {
+        $this->setRequestTargetingValues();
+
         return $this->targeting;
     }
+
 
     public function getProfilerData()
     {
@@ -63,7 +61,23 @@ class DfpDataHelper
 
     public function getSlotConfiguration()
     {
-        $this->buildAdSlotConfig();
+        if (!$this->units) {
+            $adUnits = array();
+
+            foreach ($this->positions as $key => $position) {
+                $tmp = array();
+                foreach ($position as $attributeKey => $data) {
+                    if ($attributeKey == 'slot_name') {
+                        $data = "/{$this->networkId}/{$data}";
+                    }
+                    $tmp[Inflector::camelize($attributeKey)] = $data;
+                }
+
+                $adUnits[] = $tmp;
+            }
+
+            $this->units = $adUnits;
+        }
 
         return $this->units;
     }
@@ -73,22 +87,13 @@ class DfpDataHelper
         $this->usedSlots = $slots;
     }
 
-    protected function buildAdSlotConfig()
+    protected function setRequestTargetingValues()
     {
-        $adUnits = array();
+        $currentRequest = $this->requestStack->getCurrentRequest();
+        $request = $this->requestStack->getMasterRequest();
 
-        foreach ($this->positions as $key => $position) {
-            $tmp = array();
-            foreach ($position as $attributeKey => $data) {
-                if ($attributeKey == 'slot_name') {
-                    $data = "/{$this->networkId}/{$data}";
-                }
-                $tmp[Inflector::camelize($attributeKey)] = $data;
-            }
-
-            $adUnits[] = $tmp;
+        if ($request && $request == $currentRequest) {
+            $this->addTargeting('path', $request->getPathInfo());
         }
-
-        $this->units = $adUnits;
     }
 }

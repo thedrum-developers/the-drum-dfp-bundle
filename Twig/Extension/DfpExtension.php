@@ -2,7 +2,7 @@
 
 namespace TheDrum\DfpBundle\Twig\Extension;
 
-use TheDrum\DfpBundle\Helper\DfpDataHelper;
+use TheDrum\DfpBundle\Helper\DfpDataHelperInterface;
 
 class DfpExtension extends \Twig_Extension
 {
@@ -10,7 +10,7 @@ class DfpExtension extends \Twig_Extension
     protected $debug;
     protected $active;
 
-    public function __construct(DfpDataHelper $dataHelper, $active = true)
+    public function __construct(DfpDataHelperInterface $dataHelper, $active = true)
     {
         $this->dataHelper = $dataHelper;
         $this->active = $active;

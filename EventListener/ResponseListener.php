@@ -4,13 +4,13 @@ namespace TheDrum\DfpBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 
-use TheDrum\DfpBundle\Helper\DfpDataHelper;
+use TheDrum\DfpBundle\Helper\DfpDataHelperInterface;
 
 class ResponseListener
 {
     protected $dfpDataHelper;
 
-    public function __construct(DfpDataHelper $dfpDataHelper)
+    public function __construct(DfpDataHelperInterface $dfpDataHelper)
     {
         $this->dfpDataHelper = $dfpDataHelper;
     }
