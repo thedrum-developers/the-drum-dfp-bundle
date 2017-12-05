@@ -1,5 +1,14 @@
+$.fn.isInViewport = function() {
+    var elementTop = $(this).offset().top;
+    var elementBottom = elementTop + $(this).outerHeight();
+    var viewportTop = $(window).scrollTop();
+    var viewportBottom = viewportTop + $(window).height();
+    return elementBottom > viewportTop && elementTop < viewportBottom;
+};
+
 var googletag = googletag || {};
 googletag.cmd = googletag.cmd || [];
+
 (function() {
     var gads = document.createElement('script');
     gads.async = true;
@@ -30,51 +39,62 @@ googletag.cmd.push(function() {
 //the set up code
 googletag.cmd.push(function() {
     if (typeof(tdDfpUnits) !== 'undefined') {
-      $.each(tdDfpUnits, function(i, data) {
-          // check if the dom exists
-          if ($('#'+data.domName).length === 0) {
-              return;
-          }
 
-          var builtMapping = null;
+        $.each(tdDfpUnits, loadAdvert);
 
-          if(data.screenSizes.length > 0) {
-              var sizeMapping = googletag.sizeMapping();
-              for(index = 0;index < data.screenSizes.length;index++) {
-                  var item = data.screenSizes[index];
-                  sizeMapping.addSize([item[0], item[1]], data.adSizes[index]);
-              }
-              builtMapping = sizeMapping.build();
-           }
+        function loadAdvert(i, data) {
+            // check if the dom exists
+            if ($('#'+data.domName).length === 0) {
+                return;
+            }
 
-          // push this ad slot through
-          var dfp = googletag.defineSlot(data.slotName, data.adSizes, data.domName);
+            var builtMapping = null;
 
-          if(builtMapping !== null) {
-              dfp.defineSizeMapping(builtMapping);
-          }
-          dfp.addService(googletag.pubads());
-          dfp.setTargeting("position", data.positionName);
-      });
+            if(data.screenSizes.length > 0) {
+                var sizeMapping = googletag.sizeMapping();
+                for(index = 0;index < data.screenSizes.length;index++) {
+                    var item = data.screenSizes[index];
+                    sizeMapping.addSize([item[0], item[1]], data.adSizes[index]);
+                }
+                builtMapping = sizeMapping.build();
+            }
 
-      googletag.pubads().enableSingleRequest();
-      googletag.pubads().collapseEmptyDivs();
-      // send the request
-      googletag.enableServices();
+            // push this ad slot through
+            var dfp = googletag.defineSlot(data.slotName, data.adSizes, data.domName);
+
+            if(builtMapping !== null) {
+                dfp.defineSizeMapping(builtMapping);
+            }
+            dfp.addService(googletag.pubads());
+            dfp.setTargeting("position", data.positionName);
+        }
+
+        googletag.pubads().collapseEmptyDivs();
+        googletag.enableServices();
     }
 });
 
+
 //the display code
 googletag.cmd.push(function() {
-    $.each(tdDfpUnits, function(i, data) {
-        // check if the dom exists
-        if ($('#'+data.domName).length === 0) {
-            return;
-        }
+    function displayVisibleAds() {
+        $.each(tdDfpUnits, function(i, data) {
+            // check if the dom exists
+            var dom = $('#' + data.domName);
+            if (dom.length === 0) {
+                return;
+            }
 
-        googletag.display(data.domName);
-    });
+            if(dom.isInViewport() && !dom.data('adloaded')) {
+                googletag.display(data.domName);
+                $('#' + data.domName).data('adloaded', true);
+            }
+        });
+    }
+
+    $(document).scroll(displayVisibleAds);
+    //Run once on page loaded to show ads in viewport
+    displayVisibleAds();
 });
 
 
-// $('#DFP_drum_pushdown iframe').height($('#DFP_drum_pushdown iframe').contents().find('iframe').height())
