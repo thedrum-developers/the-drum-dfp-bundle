@@ -78,23 +78,23 @@ googletag.cmd.push(function() {
 //the display code
 googletag.cmd.push(function() {
     function displayVisibleAds() {
-        $.each(tdDfpUnits, function(i, data) {
-            // check if the dom exists
-            var dom = $('#' + data.domName);
-            if (dom.length === 0) {
-                return;
-            }
+        if (typeof(tdDfpUnits) !== 'undefined') {
+            $.each(tdDfpUnits, function (i, data) {
+                // check if the dom exists
+                var dom = $('#' + data.domName);
+                if (dom.length === 0) {
+                    return;
+                }
 
-            if(dom.isInViewport() && !dom.data('adloaded')) {
-                googletag.display(data.domName);
-                $('#' + data.domName).data('adloaded', true);
-            }
-        });
+                if (dom.isInViewport() && !dom.data('adloaded')) {
+                    googletag.display(data.domName);
+                    $('#' + data.domName).data('adloaded', true);
+                }
+            });
+        }
     }
 
     $(document).scroll(displayVisibleAds);
     //Run once on page loaded to show ads in viewport
     displayVisibleAds();
 });
-
-
