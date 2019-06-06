@@ -17,13 +17,16 @@ googletag.cmd.push(function() {
 
     if (typeof(tdDfpTargeting) !== 'undefined') {
         $.each(tdDfpTargeting, function (key, value) {
-
             // we don't a real value
             if (value === 0 || value === '' || value === null) {
                 return;
             }
             googletag.pubads().setTargeting(key, value);
         });
+
+        if (gp !== undefined) {
+            googletag.pubads().setTargeting('user_company', gp)
+        }
     }
 });
 
