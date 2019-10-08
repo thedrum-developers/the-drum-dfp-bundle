@@ -1,8 +1,8 @@
-$.fn.isInViewport = function() {
-    var elementTop = $(this).offset().top;
-    var elementBottom = elementTop + $(this).outerHeight();
-    var viewportTop = $(window).scrollTop();
-    var viewportBottom = viewportTop + $(window).height();
+jQuery.fn.isInViewport = function() {
+    var elementTop = jQuery(this).offset().top;
+    var elementBottom = elementTop + jQuery(this).outerHeight();
+    var viewportTop = jQuery(window).scrollTop();
+    var viewportBottom = viewportTop + jQuery(window).height();
     return elementBottom > viewportTop && elementTop < viewportBottom;
 };
 
@@ -25,7 +25,7 @@ googletag.cmd.push(function() {
     googletag.pubads().set("adsense_background_color", "FFFFFF");
 
     if (typeof(tdDfpTargeting) !== 'undefined') {
-        $.each(tdDfpTargeting, function (key, value) {
+        jQuery.each(tdDfpTargeting, function (key, value) {
 
             // we don't a real value
             if (value === 0 || value === '' || value === null) {
@@ -40,11 +40,11 @@ googletag.cmd.push(function() {
 googletag.cmd.push(function() {
     if (typeof(tdDfpUnits) !== 'undefined') {
 
-        $.each(tdDfpUnits, loadAdvert);
+        jQuery.each(tdDfpUnits, loadAdvert);
 
         function loadAdvert(i, data) {
             // check if the dom exists
-            if ($('#'+data.domName).length === 0) {
+            if (jQuery('#'+data.domName).length === 0) {
                 return;
             }
 
@@ -79,22 +79,22 @@ googletag.cmd.push(function() {
 googletag.cmd.push(function() {
     function displayVisibleAds() {
         if (typeof(tdDfpUnits) !== 'undefined') {
-            $.each(tdDfpUnits, function (i, data) {
+            jQuery.each(tdDfpUnits, function (i, data) {
                 // check if the dom exists
-                var dom = $('#' + data.domName);
+                var dom = jQuery('#' + data.domName);
                 if (dom.length === 0) {
                     return;
                 }
 
                 if (dom.isInViewport() && !dom.data('adloaded')) {
                     googletag.display(data.domName);
-                    $('#' + data.domName).data('adloaded', true);
+                    jQuery('#' + data.domName).data('adloaded', true);
                 }
             });
         }
     }
 
-    $(document).scroll(displayVisibleAds);
+    jQuery(document).scroll(displayVisibleAds);
     //Run once on page loaded to show ads in viewport
     displayVisibleAds();
 });
