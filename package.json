@@ -1,0 +1,30 @@
+{
+  "name": "the-drum-dfp-bundle",
+  "version": "1.0.0",
+  "description": "[![SensioLabsInsight](https://insight.sensiolabs.com/projects/ad468b2f-affb-49cb-9b50-01d4fe231194/mini.png)](https://insight.sensiolabs.com/projects/ad468b2f-affb-49cb-9b50-01d4fe231194)",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "node_modules/.bin/encore dev",
+    "watch": "node_modules/.bin/encore dev --watch",
+    "prod": "node_modules/.bin/encore prod",
+    "clean": " rm -r Resources/public/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thedrum-developers/the-drum-dfp-bundle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thedrum-developers/the-drum-dfp-bundle/issues"
+  },
+  "homepage": "https://github.com/thedrum-developers/the-drum-dfp-bundle#readme",
+  "devDependencies": {
+    "@symfony/webpack-encore": "^0.28.0",
+    "babel-plugin-transform-class-properties": "^6.24.1"
+  },
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "lodash-es": "^4.17.15"
+  }
+}
