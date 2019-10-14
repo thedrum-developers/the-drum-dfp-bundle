@@ -52,7 +52,6 @@ class GoogleAdManager {
     }
 
     displayAdverts(tdDfpU1nits) {
-        debugger;
 
         //the set up code
         window.googletag.cmd.push(function() {

@@ -3,7 +3,7 @@ services:
       class: TheDrum\DfpBundle\Helper\DfpDataHelper
       arguments: [ "@request_stack" ]
       calls:
-          - [ addTargeting, [ 'environment', '%kernel.environment%' ] ]
+          - [ addTargeting, [ 'environment', 'prod' ] ]
 
     the_drum_dfp.data_collector:
       class: TheDrum\DfpBundle\DataCollector\DfpDataCollector

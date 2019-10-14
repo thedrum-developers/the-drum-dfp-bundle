@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "jquery": "^3.4.1",
-    "lodash-es": "^4.17.15"
+    "lodash-es": "^4.17.15",
+    "prebid.js": "^2.35.0"
   }
 }
