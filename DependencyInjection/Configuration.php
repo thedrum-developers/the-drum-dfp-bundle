@@ -32,6 +32,7 @@ class Configuration implements ConfigurationInterface
                     ->prototype('array')
                         ->children()
                             ->scalarNode('slot_name')->end()
+                            ->scalarNode('prebid')->end()
                             ->arrayNode('screen_sizes')
                                 ->prototype('array')
                                     ->prototype('scalar')->end()

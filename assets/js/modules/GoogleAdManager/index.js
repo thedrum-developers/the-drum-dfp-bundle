@@ -34,8 +34,6 @@ class GoogleAdManager {
     }
 
     setDFPTargeting(tdDfpTargeting) {
-        debugger;
-
         window.googletag.cmd.push(function() {
             if (typeof(tdDfpTargeting) !== 'undefined') {
 
@@ -102,10 +100,7 @@ class GoogleAdManager {
     }
 
     loadAdverts(tdDfpUnits) {
-        debugger;
-
         window.googletag.cmd.push(function() {
-            debugger;
             each(tdDfpUnits, function (data, i) {
                 // check if the dom exists
                 var dom = $('#' + data.domName);

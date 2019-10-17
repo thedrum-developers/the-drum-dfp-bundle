@@ -33,4 +33,14 @@ Encore
     ;
     // console.log(Encore.getWebpackConfig());
 
-module.exports = Encore.getWebpackConfig();
+
+
+const config = Encore.getWebpackConfig();
+
+console.log(config.output);
+
+config.output.library= [
+    'DevDFP'
+];
+
+module.exports = config;
