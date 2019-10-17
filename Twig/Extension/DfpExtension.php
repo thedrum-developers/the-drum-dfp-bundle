@@ -36,11 +36,14 @@ class DfpExtension extends \Twig_Extension
         $units = $this->dataHelper->getSlotConfiguration();
         $targeting = $this->dataHelper->getTargeting();
 
+        $bidders = $this->dataHelper->getPrebidBidders();
+
         if ($units) {
             $markup = [
                 '<script language="javascript">',
                 'var tdDfpUnits = ' . json_encode($units) . ";",
                 'var tdDfpTargeting = ' . json_encode($targeting) . ";",
+                'var bidders = ' . json_encode($bidders) . ';',
                 '</script>',
             ];
         }

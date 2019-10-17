@@ -1,7 +1,6 @@
 import GoogleAdManager from './modules/GoogleAdManager'
 import prebid from 'prebid.js';
 import 'prebid.js/modules/rubiconBidAdapter';
-import * as utils from "prebid.js/src/utils";
 
 prebid.processQueue();
 
@@ -84,20 +83,6 @@ var sizeMap = {
 const rubiconSizes = {};
 Object.values(sizeMap).forEach(item => { rubiconSizes[item] = item });
 
-
-
-const bidders = [
-    {
-        bidder: "rubicon",
-        params: {
-            accountId: 21502,
-            siteId: 21502,
-            zoneId: 1454090
-            // zoneId: 1454092
-        },
-    }
-]
-
 const googleAdManager = new GoogleAdManager();
 
 prebid.setConfig({
@@ -115,31 +100,7 @@ if(tdDfpTargeting !== undefined) {
 var PREBID_TIMEOUT = 1000;
 var FAILSAFE_TIMEOUT = 1000;
 
-
-var sizes = [
-    [300, 250],
-    [300, 600]
-];
-var adUnits = [{
-    code: '/5639370/BID_Drum_300x250_1',
-    mediaTypes: {
-        banner: {
-            sizes: sizes
-        }
-    },
-    bids: [
-        {
-            bidder: "rubicon",
-            params: {
-                accountId: 21502,
-                siteId: 21502,
-                zoneId: 1454090
-                // zoneId: 1454092
-            },
-        }
-    ]
-}];
-
+//Todo: change this to use the bidders data to build up prebidding ad units
 let prebidUnits = tdDfpUnits.map(a => {
     return {
         code: a.slotName,
@@ -151,12 +112,7 @@ let prebidUnits = tdDfpUnits.map(a => {
         bids: [
             {
                 bidder: "rubicon",
-                params: {
-                    accountId: 21502,
-                    siteId: 21502,
-                    zoneId: 1454090
-                    // zoneId: 1454092
-                },
+                params: bidders.rubicon.params,
             }
         ]
     };
@@ -192,7 +148,6 @@ function initAdserver() {
 setTimeout(function() {
     initAdserver();
 }, FAILSAFE_TIMEOUT);
-
 
 export default {
     prebid: prebid,

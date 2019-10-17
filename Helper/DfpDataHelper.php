@@ -13,6 +13,8 @@ class DfpDataHelper implements DfpDataHelperInterface
     protected $units = array();
     protected $usedSlots = array();
 
+    protected $prebidConf;
+
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
@@ -26,6 +28,15 @@ class DfpDataHelper implements DfpDataHelperInterface
         $this->addTargeting('url', $domain);
     }
 
+    public function setPrebidConf(array $config) {
+        $this->prebidConf = $config;
+    }
+    
+    public function getPrebidBidders() {
+        dump($this->prebidConf['bidders']);
+        return $this->prebidConf['bidders'];
+    }
+    
     public function addTargeting($key, $value)
     {
         $this->targeting[$key] = $value;

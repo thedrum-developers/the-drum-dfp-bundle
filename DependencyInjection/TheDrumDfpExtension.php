@@ -21,12 +21,17 @@ class TheDrumDfpExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
         // Once the services definition are read, get your service and add a method call to setConfig()
         $dfpDataHelperDefinition = $container->getDefinition('the_drum_dfp.helper.dfp_data');
         $dfpDataHelperDefinition->addMethodCall('setConfig', array($config[ 'network_id' ], $config['domain'], $config['positions']));
+        
+        if($config['prebid']['enabled']) {
+            $dfpDataHelperDefinition->addMethodCall('setPrebidConf', array($config['prebid']));
+        }
+        
+        
     }
 }
