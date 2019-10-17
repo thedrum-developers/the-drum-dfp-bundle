@@ -1,0 +1,10 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/public/js/runtime.js",
+        "/public/js/app.js"
+      ]
+    }
+  }
+}
