@@ -25,6 +25,10 @@ class GoogleAdManager {
         gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
         var node = document.getElementsByTagName('script')[0];
         node.parentNode.insertBefore(gads, node);
+
+        window.googletag.cmd.push(function() {
+            window.googletag.pubads().disableInitialLoad();
+        });
     }
 
     setDFPConfig(key, value) {
@@ -49,7 +53,7 @@ class GoogleAdManager {
         });
     }
 
-    displayAdverts(tdDfpU1nits) {
+    initAdverts(tdDfpU1nits) {
 
         //the set up code
         window.googletag.cmd.push(function() {
@@ -89,14 +93,15 @@ class GoogleAdManager {
                 window.googletag.enableServices();
             }
         });
+    }
 
 
+    displayAdverts() {
         if(this.shouldLazyLoad) {
             this.lazyLoadAdverts(tdDfpUnits);
         } else {
             this.loadAdverts(tdDfpUnits);
         }
-
     }
 
     loadAdverts(tdDfpUnits) {

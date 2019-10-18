@@ -1,11 +1,9 @@
 import GoogleAdManager from './modules/GoogleAdManager'
 import prebid from 'prebid.js';
 import 'prebid.js/modules/rubiconBidAdapter';
-
 prebid.processQueue();
 
 window.prebid = prebid;
-
 
 var sizeMap = {
     1: '468x60',
@@ -80,6 +78,8 @@ var sizeMap = {
     278: '320x500',
     288: '640x380'
 };
+
+
 const rubiconSizes = {};
 Object.values(sizeMap).forEach(item => { rubiconSizes[item] = item });
 
@@ -87,7 +87,10 @@ const googleAdManager = new GoogleAdManager();
 
 prebid.setConfig({
     debugging: {
-        enabled: true
+        enabled: true,
+        bids: [{
+            cpm: 200
+        }]
     }
 })
 
@@ -130,6 +133,8 @@ console.log(prebidUnits);
 
 prebid.addAdUnits(prebidUnits)
 
+googleAdManager.initAdverts(tdDfpUnits);
+
 prebid.requestBids({
     bidsBackHandler: initAdserver,
     timeout: PREBID_TIMEOUT
@@ -140,14 +145,16 @@ function initAdserver() {
     prebid.initAdserverSet = true;
     googletag.cmd.push(function() {
         prebid.setTargetingForGPTAsync && prebid.setTargetingForGPTAsync();
-        googletag.pubads().refresh();
         googleAdManager.displayAdverts(tdDfpUnits);
+        console.log('refresh adverts');
+        googletag.pubads().refresh();
+
     });
 }
 
-setTimeout(function() {
-    initAdserver();
-}, FAILSAFE_TIMEOUT);
+// setTimeout(function() {
+//     initAdserver();
+// }, FAILSAFE_TIMEOUT);
 
 export default {
     prebid: prebid,
