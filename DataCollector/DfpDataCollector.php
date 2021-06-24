@@ -5,13 +5,12 @@ namespace TheDrum\DfpBundle\DataCollector;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
 use TheDrum\DfpBundle\Helper\DfpDataHelperInterface;
 
 class DfpDataCollector extends DataCollector
 {
     protected $dfpDataHelper;
-    protected $data = array();
+    protected $data = [];
 
     public function __construct(DfpDataHelperInterface $dfpDataHelper)
     {
@@ -29,10 +28,9 @@ class DfpDataCollector extends DataCollector
     {
         if (isset($this->data['targeting'])) {
             return $this->data['targeting'];
-        } else {
-            return array();
         }
 
+        return [];
     }
 
     public function getSlotData()
@@ -54,5 +52,10 @@ class DfpDataCollector extends DataCollector
     public function getName()
     {
         return 'the_drum_dfp.data_collector';
+    }
+
+    public function reset()
+    {
+        $this->data = [];
     }
 }
