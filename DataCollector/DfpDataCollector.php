@@ -11,7 +11,7 @@ use TheDrum\DfpBundle\Helper\DfpDataHelperInterface;
 class DfpDataCollector extends DataCollector
 {
     protected $dfpDataHelper;
-    protected $data = array();
+    protected $data = [];
 
     public function __construct(DfpDataHelperInterface $dfpDataHelper)
     {

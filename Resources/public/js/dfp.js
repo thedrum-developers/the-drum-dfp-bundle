@@ -1,3 +1,12 @@
+const $ = require('jquery');
+
+let data = document.querySelector('#dfp');
+
+if (data !== null) {
+    var tdDfpTargeting = data.dataset.td-dfp-targeting;
+    var tdDfpUnits = data.dataset.td-dfp-units;
+}
+
 $.fn.isInViewport = function() {
     var elementTop = $(this).offset().top;
     var elementBottom = elementTop + $(this).outerHeight();
@@ -13,7 +22,7 @@ googletag.cmd = googletag.cmd || [];
     var gads = document.createElement('script');
     gads.async = true;
     gads.type = 'text/javascript';
-    var useSSL = 'https:' == document.location.protocol;
+    var useSSL = 'https:' === document.location.protocol;
     gads.src = (useSSL ? 'https:' : 'http:') + '//www.googletagservices.com/tag/js/gpt.js';
     var node = document.getElementsByTagName('script')[0];
     node.parentNode.insertBefore(gads, node);

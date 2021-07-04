@@ -3,8 +3,10 @@
 namespace TheDrum\DfpBundle\Twig\Extension;
 
 use TheDrum\DfpBundle\Helper\DfpDataHelperInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DfpExtension extends \Twig_Extension
+class DfpExtension extends AbstractExtension
 {
     protected $dataHelper;
     protected $debug;
@@ -22,7 +24,7 @@ class DfpExtension extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('the_drum_dfp_render', array($this, 'renderDfp'), array('is_safe' => array('html'))),
+            new TwigFunction('the_drum_dfp_render', array($this, 'renderDfp'), array('is_safe' => array('html'))),
         );
     }
 
@@ -37,15 +39,10 @@ class DfpExtension extends \Twig_Extension
         $targeting = $this->dataHelper->getTargeting();
 
         if ($units) {
-            $markup = [
-                '<script language="javascript">',
-                'var tdDfpUnits = ' . json_encode($units) . ";",
-                'var tdDfpTargeting = ' . json_encode($targeting) . ";",
-                '</script>',
-            ];
+            return '<div id="dfp" data-td-dfp-units="' . json_encode($units) . '" data-td-dfp-targeting="' . json_encode($targeting) . '"></div>';
         }
 
-        return implode('', $markup);
+        return '';
     }
 
     public function getName()
