@@ -39,7 +39,7 @@ class DfpExtension extends AbstractExtension
         $targeting = $this->dataHelper->getTargeting();
 
         if ($units) {
-            return '<div id="dfp" data-td-dfp-units="' . json_encode($units) . '" data-td-dfp-targeting="' . json_encode($targeting) . '"></div>';
+            return '<div id="dfp" data-td-dfp-units=\'' . json_encode($units) . '\' data-td-dfp-targeting=\'' . json_encode($targeting) . '\'></div>';
         }
 
         return '';

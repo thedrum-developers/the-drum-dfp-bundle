@@ -3,8 +3,8 @@ const $ = require('jquery');
 let data = document.querySelector('#dfp');
 
 if (data !== null) {
-    var tdDfpTargeting = data.dataset.td-dfp-targeting;
-    var tdDfpUnits = data.dataset.td-dfp-units;
+    var tdDfpTargeting = data.dataset.tdDfpTargeting;
+    var tdDfpUnits = data.dataset.tdDfpUnits;
 }
 
 $.fn.isInViewport = function() {
