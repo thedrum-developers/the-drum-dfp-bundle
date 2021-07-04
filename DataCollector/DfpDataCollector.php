@@ -55,4 +55,9 @@ class DfpDataCollector extends DataCollector
     {
         return 'the_drum_dfp.data_collector';
     }
+
+    public function reset()
+    {
+        $this->data = [];
+    }
 }
