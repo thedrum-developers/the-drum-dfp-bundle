@@ -6,18 +6,19 @@ use Symfony\Component\HttpFoundation\RequestStack;
 
 class DfpDataHelper implements DfpDataHelperInterface
 {
+    protected static $targeting = [];
+
     protected $networkId;
-    protected $targeting = array();
-    protected $positions = array();
-    protected $units = array();
-    protected $usedSlots = array();
+    protected $positions = [];
+    protected $units = [];
+    protected $usedSlots = [];
 
     public function __construct(RequestStack $requestStack)
     {
         $this->requestStack = $requestStack;
     }
 
-    public function setConfig($networkId, $domain, $positions = array())
+    public function setConfig($networkId, $domain, $positions = [])
     {
         $this->networkId = $networkId;
         $this->positions = $positions;
@@ -27,23 +28,23 @@ class DfpDataHelper implements DfpDataHelperInterface
 
     public function addTargeting($key, $value)
     {
-        $this->targeting[$key] = $value;
+        self::$targeting[$key] = $value;
     }
 
-    public function mergeTargeting($data = array())
+    public function mergeTargeting($data = [])
     {
         if (!is_array($data)) {
             return;
         }
 
-        $this->targeting = array_merge($this->targeting, $data);
+        self::$targeting = array_merge(self::$targeting, $data);
     }
 
     public function getTargeting()
     {
         $this->setRequestTargetingValues();
 
-        return $this->targeting;
+        return self::$targeting;
     }
 
 
@@ -61,10 +62,10 @@ class DfpDataHelper implements DfpDataHelperInterface
     public function getSlotConfiguration()
     {
         if (!$this->units) {
-            $adUnits = array();
+            $adUnits = [];
 
             foreach ($this->positions as $key => $position) {
-                $tmp = array();
+                $tmp = [];
                 foreach ($position as $attributeKey => $data) {
                     if ($attributeKey == 'slot_name') {
                         $data = "/{$this->networkId}/{$data}";
@@ -81,7 +82,7 @@ class DfpDataHelper implements DfpDataHelperInterface
         return $this->units;
     }
 
-    public function setUsedSlots($slots = array())
+    public function setUsedSlots($slots = [])
     {
         $this->usedSlots = $slots;
     }
